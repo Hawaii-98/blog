@@ -75,7 +75,7 @@ int PrintLinkList(LinkList L)
 //返回链表中的元素个数
 int ListLength(LinkList L)
 {
-   int i=0;
+    int i = 0;
     LinkList q = L->next;
     while (q)
     {
@@ -85,7 +85,25 @@ int ListLength(LinkList L)
     printf("链表中的元素个数为：%d\n", i);
 }
 
-//
+//返回L中第i个数据元素的值
+int GetElem(LinkList L, int i)
+{
+    LinkList p = L->next;
+    int j=1;
+    int e;
+    while (p && j < i)
+    {
+        p = p->next;
+        j++;
+    }
+    if (!p || j > i)
+        printf("第%d个位置的元素不存在！\n", i);
+    else
+    {
+        e = p->data;
+        printf("第%d个位置的元素为%d！\n", i, e);
+    }
+}
 
 //链式线性表L已存在时，将L重置为空表
 int ClearList(LinkList *L)
@@ -113,8 +131,11 @@ int main()
     printf("尾插法:\n");
     PrintLinkList(L);
 
-    ListLength(L);   //输出链表元素个数
+    ListLength(L); //输出链表元素个数
 
-    ClearList(&L);      
-    PrintLinkList(L);   
+    GetElem(L, 2);//查找第i个位置的元素
+    
+    ClearList(&L); //清空链表
+    PrintLinkList(L);
+
 }
