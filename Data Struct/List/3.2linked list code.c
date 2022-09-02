@@ -67,7 +67,7 @@ int PrintLinkList(LinkList L)
         while (p)
         {
             printf("%d\n", p->data);
-            p = p->next;
+            p = p->next; //常规的链表遍历操作
         }
     }
 }
@@ -89,7 +89,7 @@ int ListLength(LinkList L)
 int GetElem(LinkList L, int i)
 {
     LinkList p = L->next;
-    int j=1;
+    int j = 1;
     int e;
     while (p && j < i)
     {
@@ -119,6 +119,74 @@ int ClearList(LinkList *L)
     (*L)->next = NULL;
 }
 
+//在L中第i个位置之前插入新的数据元素e，L的长度加1
+int InsertList(LinkList *L, int e, int i)
+{
+    LinkList p, q;
+    p = *L;    //此处不可用p=(*L)->next,这使得向后插入了一个位置
+    int j = 1; //一定要在定义变量时想好其初始值！
+    while (p && j < i)
+    {
+        p = p->next;
+        j++;
+    }
+    if (!p || j > i)
+        printf("链表中没有第%d个位置！\n", i);
+    else
+    {
+        q = (LinkList)malloc(sizeof(Node));
+        q->data = e;
+        q->next = p->next;
+        p->next = q;
+        printf("数据已经插入！\n");
+    }
+}
+
+//返回L中第1个与e满足关系的数据元素的位序。
+int LocateElem(LinkList L, int e)
+{
+    int i = 0;
+    LinkList p = L->next;
+    while (p)
+    {
+        i++;
+        if (p->data == e)
+        {
+            printf("链表中元素值为%d的元素在第%d个位置。\n", e, i);
+            break;
+        }
+        p = p->next;
+    }
+    if (p == NULL)
+        printf("链表中没有%d这个元素！\n", e);
+}
+
+//删除L的第i个数据元素，并用e返回其值，L的长度减1
+int DeleteList(LinkList *L, int i)
+{
+    int m;
+    LinkList p, q;
+    p = *L;
+    int j = 1; //一定要在定义变量时想好其初始值！
+    while ((p->next) && j < i)
+    {
+        p = p->next;
+        j++;
+    }
+    if (!(p->next)|| j > i)
+        printf("链表中没有第%d个位置！\n", i);
+    else
+    {
+        q = p->next;
+        p->next = q->next;
+        m = q->data;
+        free(q);
+        printf("第%d个元素%d已删除\n", i, m);
+    }
+}
+
+
+/****************************主函数****************************/
 int main()
 {
     LinkList L;
@@ -133,9 +201,16 @@ int main()
 
     ListLength(L); //输出链表元素个数
 
-    GetElem(L, 2);//查找第i个位置的元素
-    
-    ClearList(&L); //清空链表
+    GetElem(L, 2); //查找第i个位置的元素
+
+    InsertList(&L, 89, 3); //在第i个位置插入值
     PrintLinkList(L);
 
+    LocateElem(L, 89); //查询89的位置
+
+    DeleteList(&L, 2); //删除第i个位置的元素
+    PrintLinkList(L);
+
+    ClearList(&L); //清空链表
+    PrintLinkList(L);
 }
