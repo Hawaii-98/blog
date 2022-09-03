@@ -38,6 +38,12 @@ int PrintStack(SqStack S)
     }
 }
 
+//输出栈的长度/元素个数
+int CountStack(SqStack S)
+{
+    printf("栈的长度为：%d\n", S.top + 1);
+}
+
 //若栈不空，则删除S的栈顶元素,输出删除的值
 int DeleteStack(SqStack *S)
 {
@@ -64,8 +70,9 @@ int main()
         InsertStack(&S, i); //循环插入7个元素
     }
     PrintStack(S); //打印栈底到栈底的元素
+    CountStack(S); //输出栈的长度
 
     DeleteStack(&S); //删除栈顶元素
-
     PrintStack(S);
+    CountStack(S);
 }
