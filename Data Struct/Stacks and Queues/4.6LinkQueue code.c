@@ -68,17 +68,108 @@ int LengthQueue(LinkQueue Q)
     printf("队列的长度为%d.\n", i);
 }
 
+//从队头到队尾依次对队列Q中每个元素输出
+int PrintQueue(LinkQueue Q)
+{
+    if (Q.front == Q.rear)
+        printf("待打印的队列为空！\n");
+    else
+    {
+        QueuePtr p = Q.front->next;
+        printf("队列元素为：\n");
+        while (p) //注意，判定条件while (p != Q.rear)会使得最后一个元素无法输出！！
+        {         //应该是while (p != Q.rear->next)即p不为空！！
+            printf("%d\n", p->data);
+            p = p->next;
+        }
+    }
+}
+
+//若队列不空,删除Q的队头元素,打印其值,否则打印提示
+int DeleteQueue(LinkQueue *Q)
+{
+    if (Q->front == Q->rear)
+        printf("队列为空，无法删除！\n");
+    else
+    {
+        QueuePtr p;
+        p = Q->front->next;
+        printf("出队的元素是%d。\n", p->data);
+        Q->front->next = p->next;
+        if (p == Q->rear)
+            Q->rear = Q->front;
+        free(p);
+    }
+}
+
+//清空队列
+int ClearQueue(LinkQueue *Q)
+{
+    QueuePtr p, q;
+    Q->rear = Q->front;
+    p = Q->front->next;
+    while (p)
+    {
+        q = p;
+        p = p->next;
+        free(q);
+    }
+    printf("队列已清空！\n");
+}
+
+//销毁队列
+int DestroyQueue(LinkQueue *Q)
+{
+    while (Q->front)
+    {
+        Q->rear = Q->front->next;
+        free(Q->front);
+        Q->front = Q->rear;
+    }
+}
+
+//注意销毁队列函数不应这样写(引入临时变量p)！这里的p会为Q->front申请空间？！导致头结点无法释放！！
+/*int DestroyQueue(LinkQueue *Q)
+{
+
+    QueuePtr p = Q->front;
+    while (p)
+    {
+        Q->rear = p->next;
+        free(p);
+        p = Q->rear;
+    }
+}*/
+
 /*******************主函数*************************/
 int main()
 {
     int i;
     LinkQueue Q;
-    InitQueue(&Q);
+    InitQueue(&Q); //初始化队列
     for (i = 2; i < 8; i++)
     {
-        EnQueue(&Q, i);
+        EnQueue(&Q, i); //元素入队
     }
 
     GetHead(Q);
-    LengthQueue(Q);
+    LengthQueue(Q); //队列长度
+
+    PrintQueue(Q); //打印队列元素
+
+    DeleteQueue(&Q); //队头元素出队
+    PrintQueue(Q);
+
+    ClearQueue(&Q); //清空队列
+    PrintQueue(Q);
+
+    for (i = 5; i < 8; i++)
+    {
+        EnQueue(&Q, i); //元素入队
+    }
+    PrintQueue(Q); //打印队列元素
+
+    printf("销毁队列前,Q.front=%u Q.rear=%u\n", Q.front, Q.rear);
+    DestroyQueue(&Q); //销毁队列
+    printf("销毁队列后,Q.front=%u Q.rear=%u\n", Q.front, Q.rear);
 }
