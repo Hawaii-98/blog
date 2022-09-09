@@ -128,18 +128,21 @@ int DestroyQueue(LinkQueue *Q)
     }
 }
 
-//注意销毁队列函数不应这样写(引入临时变量p)！这里的p会为Q->front申请空间？！导致头结点无法释放！！
-/*int DestroyQueue(LinkQueue *Q)
+//注意销毁队列函数如果这样写：引入临时变量p。此时！p和Q->front都指向头节点空间，释放的p，但是还存在着Q->front，因此需要对头结点进行释放！！
+int DestroyQueue(LinkQueue *Q)
 {
 
     QueuePtr p = Q->front;
+
     while (p)
     {
         Q->rear = p->next;
         free(p);
         p = Q->rear;
     }
-}*/
+
+    Q->front = NULL;       //清空头结点，此处不要用free(Q->front)，不能释放！原因持续探索中.....
+}
 
 /*******************主函数*************************/
 int main()
