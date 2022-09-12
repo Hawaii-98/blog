@@ -63,10 +63,66 @@ void PrintString(String S)
     }
 }
 
+//比较两个字符串的大小
+void CompareString(String T, String S)
+{
+    if (T[0] > S[0])
+        printf("第一个字符串更大！\n");
+    else
+    {
+        if (T[0] < S[0])
+            printf("第二个字符串更大！\n");
+        else
+        {
+            int i = 1;
+            while (T[i] == S[i])
+            {
+                i++;
+            }
+            if (T[i] > S[i])
+                printf("第一个字符串更大！\n");
+            else
+                printf("第二个字符串更大！\n");
+        }
+    }
+}
+
+//用T返回S1和S2联接而成的新串。并对截断情况打印提示
+void ContactString(String T, String S1, String S2)
+{
+    if (S1[0] + S2[0] > MAX) //说明连接之后要被截断了
+    {
+        int i, j;
+        for (i = 1; i <= S1[0]; i++)
+        {
+            T[i] = S1[i];
+        }
+        for (j = 1; j <= MAX - S1[0]; j++)
+        {
+            T[S1[0] + j] = S2[j];
+        }
+        T[0] = MAX;
+    }
+    else //连接之后也没有被截断
+    {
+        int i, j;
+        for (i = 1; i <= S1[0]; i++)
+        {
+            T[i] = S1[i];
+        }
+        for (j = 1; j <= S2[0]; j++)
+        {
+            T[S1[0] + j] = S2[j];
+        }
+        T[0] = S1[0] + S2[0];
+    }
+    printf("连接已完成！\n");
+}
+
 /**********************主函数*********************/
 void main()
 {
-    String S, T, R;
+    String S, T, R, T1, S1, X;
     ProduceString(S, "ascdsf"); //生成一个其值等于chars的串T
     StringLength(S);            //返回串的元素个数
     PrintString(S);             //输出字符串的所有字符
@@ -79,4 +135,12 @@ void main()
     StringLength(R); //返回串的元素个数
     PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
     //可以用fputs(R, stdout);//与fgets()搭配使用，不会输出换行符，但是首字符（字符串长度）也输出了
+
+    ProduceString(S1, "ascdsrtrtrtt"); //生成一个其值等于chars的串T
+    ProduceString(T1, "asddsfpopo");   //生成一个其值等于chars的串T
+    CompareString(S1, T1);             //比较两个字符串的大小
+
+    ContactString(X, S1, T1); //连接S1，T1之后赋值给X
+    StringLength(X);          //返回串的元素个数
+    PrintString(X);           //输出字符串的所有字符
 }
