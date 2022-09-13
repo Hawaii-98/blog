@@ -102,6 +102,7 @@ void ContactString(String T, String S1, String S2)
             T[S1[0] + j] = S2[j];
         }
         T[0] = MAX;
+        printf("字符串已连接，超出部分被截断。\n");
     }
     else //连接之后也没有被截断
     {
@@ -115,8 +116,15 @@ void ContactString(String T, String S1, String S2)
             T[S1[0] + j] = S2[j];
         }
         T[0] = S1[0] + S2[0];
+        printf("字符串已连接，未被截断。\n");
     }
-    printf("连接已完成！\n");
+}
+
+//清空字符串
+void ClearString(String S)
+{
+    S[0] = 0;
+    printf("字符串已清空！\n");
 }
 
 /**********************主函数*********************/
@@ -131,9 +139,9 @@ void main()
     StringLength(T);  //返回串的元素个数
     PrintString(T);   //输出字符串的所有字符
 
-    GetString(R);    //从键盘获得字符串R
-    StringLength(R); //返回串的元素个数
-    PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
+    // GetString(R);    //从键盘获得字符串R
+    // StringLength(R); //返回串的元素个数
+    // PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
     //可以用fputs(R, stdout);//与fgets()搭配使用，不会输出换行符，但是首字符（字符串长度）也输出了
 
     ProduceString(S1, "ascdsrtrtrtt"); //生成一个其值等于chars的串T
@@ -143,4 +151,7 @@ void main()
     ContactString(X, S1, T1); //连接S1，T1之后赋值给X
     StringLength(X);          //返回串的元素个数
     PrintString(X);           //输出字符串的所有字符
+
+    ClearString(S); //清空字符串
+    PrintString(S); //输出字符串的所有字符
 }
