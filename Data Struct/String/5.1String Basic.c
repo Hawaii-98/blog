@@ -55,11 +55,16 @@ void StringLength(String S)
 //输出字符串T
 void PrintString(String S)
 {
-    int i;
-    printf("字符串中的字符有：\n");
-    for (i = 1; i <= S[0]; i++)
+    if (S[0] == 0)
+        printf("待输出的字符串为空！\n");
+    else
     {
-        printf("%c\n", S[i]);
+        int i;
+        printf("字符串中的字符有：\n");
+        for (i = 1; i <= S[0]; i++)
+        {
+            printf("%c\n", S[i]);
+        }
     }
 }
 
@@ -127,10 +132,26 @@ void ClearString(String S)
     printf("字符串已清空！\n");
 }
 
+//用Sub返回串S的第pos个字符起长度为len的子串
+void SubString(String Sub, String S, int pos, int len)
+{
+    if (pos < 1 || pos > S[0] || len < 0 || len > S[0] - pos + 1)
+        printf("输入的参数有错误！\n");
+    else
+    {
+        int i;
+        for (i = 1; i <= len; i++)
+        {
+            Sub[i] = S[pos + i - 1];
+        }
+        Sub[0] = len;
+    }
+}
+
 /**********************主函数*********************/
 void main()
 {
-    String S, T, R, T1, S1, X;
+    String S, T, R, T1, S1, X, Sub;
     ProduceString(S, "ascdsf"); //生成一个其值等于chars的串T
     StringLength(S);            //返回串的元素个数
     PrintString(S);             //输出字符串的所有字符
@@ -154,4 +175,9 @@ void main()
 
     ClearString(S); //清空字符串
     PrintString(S); //输出字符串的所有字符
+
+    SubString(Sub, X, 4, 5); //用Sub返回串S的第pos个字符起长度为len的子串
+    PrintString(Sub);        //输出字符串的所有字符
+
+    
 }
