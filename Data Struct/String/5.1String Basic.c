@@ -68,15 +68,19 @@ void PrintString(String S)
     }
 }
 
-//比较两个字符串的大小
-void CompareString(String T, String S)
+//比较两个字符串的大小,不相等则提示！
+int CompareString(String T, String S)
 {
     if (T[0] > S[0])
+    {
         printf("第一个字符串更大！\n");
+    }
     else
     {
         if (T[0] < S[0])
+        {
             printf("第二个字符串更大！\n");
+        }
         else
         {
             int i = 1;
@@ -85,9 +89,13 @@ void CompareString(String T, String S)
                 i++;
             }
             if (T[i] > S[i])
+            {
                 printf("第一个字符串更大！\n");
+            }
             else
+            {
                 printf("第二个字符串更大！\n");
+            }
         }
     }
 }
@@ -148,10 +156,129 @@ void SubString(String Sub, String S, int pos, int len)
     }
 }
 
+//返回子串T在主串S中第pos个字符之后的位置。若不存在,则打印提示。
+void Index(String S, String T, int pos)
+{
+    int i = pos;                   // i用于主串的遍历
+    int j = 1;                     // j用于子串的遍历
+    while (i <= S[0] && j <= T[0]) // 若i小于S的长度并且j小于T的长度时，循环继续
+    {
+        if (S[i] == T[j]) // 两字符相等则继续
+        {
+            i++;
+            j++;
+        }
+        else
+        {
+            i = i - j + 1 + 1; // i退回到上次匹配首位的下一位(再加1)---注意此处不可以是i = i - pos + 1，因为i是从破事开始递增的！！，而且i之前已经被赋值为pos，会导致语法错误！！
+            j = 1;             // j退回到子串T的首位
+        }
+    }
+    if (j > T[0])
+    {
+        printf("待查找子串的位置是：%d！\n", i - T[0]);
+    }
+    else
+    {
+        printf("找不到该字符串！\n");
+    }
+}
+
+// T为非空串。若主串S中第pos个字符之后存在与T相等的子串，
+//则返回第一个这样的子串在S中的位置，否则打印提示。
+void Index2(String S, String T, int pos)
+{
+    int i;
+    String sub;
+    if (pos > 0)
+    {
+        i = pos;
+        while (i <= S[0] - T[0] + 1)
+        {
+            int j;
+            int k = 0;
+            SubString(sub, S, i, T[0]);
+            for (j = 1; j <= sub[0] && j <= T[0]; ++j) //比较两个字符串是否相等（默认相等，为零）
+                if (sub[j] != T[j])
+                    k = 1; //比较两个字符串是否相等，若不等，k=1;
+            if (k == 1)    //如果两串不相等
+            {
+                i++;
+            }
+            else
+            {
+                printf("第一个子串在S中的位置为：%d!\n", i);
+                break; //及时跳出循环！！否则死循环！
+            }
+        }
+    }
+    else
+        printf("输入不正确!\n");
+}
+
+//在串S的第pos个字符之前插入串T。插入位置不正确或完全插入或者部分插入都返回提示
+void InsertString(String S, String T, int pos)
+{
+    if (pos < 1 || pos > MAX)
+        printf("插入位置不正确！\n");
+    else
+    {
+        int i = pos;
+        if (S[0] + T[0] <= MAX) //完全插入
+        {
+            for (i = S[0]; i >= pos; i--)
+            {
+                S[T[0] + i] = S[i];
+            }
+            for (i = 1; i <= T[0]; i++)
+            {
+                S[pos + i - 1] = T[i];
+            }
+            S[0] = S[0] + T[0];
+            printf("字符串已完全插入！\n");
+        }
+        else //部分插入------此程序存在问题
+        {
+            for (i = MAX; i <= pos; i--)
+            {
+                S[i] = S[i - T[0]]; //仅此处与上面的不同！但思路相同！！
+            }
+            for (i = pos; i < pos + T[0]; i++)
+                S[i] = T[i - pos + 1];
+            S[0] = MAX;
+            printf("字符串已部分插入！\n");
+        }
+    }
+}
+
+//从串S中删除第pos个字符起长度为len的子串
+void DeleteString(String S, int pos, int len)
+{
+    if (pos < 1 || len < 0 || pos + len - 1 > S[0])
+        printf("输入参数有误！\n");
+    else
+    {
+        int i;
+        for (i = pos + len; i <= S[0]; i++) //从删除的位置直到最后，每个字符依次向前挪len长度
+        {
+            S[i - len] = S[i];
+        }
+        S[0] = S[0] - len;
+        printf("设定的字符串已删除！\n");
+    }
+}
+
+//用V替换主串S中出现的所有与T相等的不重叠的子串
+void Replace(String S,String T,String V)
+{
+    
+}
+
+
 /**********************主函数*********************/
 void main()
 {
-    String S, T, R, T1, S1, X, Sub;
+    String S, T, R, T1, S1, X, Sub, A, B;
     ProduceString(S, "ascdsf"); //生成一个其值等于chars的串T
     StringLength(S);            //返回串的元素个数
     PrintString(S);             //输出字符串的所有字符
@@ -165,9 +292,9 @@ void main()
     // PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
     //可以用fputs(R, stdout);//与fgets()搭配使用，不会输出换行符，但是首字符（字符串长度）也输出了
 
-    ProduceString(S1, "ascdsrtrtrtt"); //生成一个其值等于chars的串T
-    ProduceString(T1, "asddsfpopo");   //生成一个其值等于chars的串T
-    CompareString(S1, T1);             //比较两个字符串的大小
+    ProduceString(S1, "ascdsrtrtrtiutpopo"); //生成一个其值等于chars的串
+    ProduceString(T1, "trtiu");              //生成一个其值等于chars的串
+    CompareString(S1, T1);                   //比较两个字符串的大小
 
     ContactString(X, S1, T1); //连接S1，T1之后赋值给X
     StringLength(X);          //返回串的元素个数
@@ -179,5 +306,15 @@ void main()
     SubString(Sub, X, 4, 5); //用Sub返回串S的第pos个字符起长度为len的子串
     PrintString(Sub);        //输出字符串的所有字符
 
-    
+    Index(X, T1, 3);  //返回子串T在主串S中第pos个字符之后的位置。若不存在,则打印提示。
+    Index2(X, T1, 2); //若主串S中第pos个字符之后存在与T相等的子串，则返回第一个这样的子串在S中的位置，否则打印提示
+
+    ProduceString(A, "ascdsf"); //生成一个其值等于chars的串T
+    ProduceString(B, "ascef");  //生成一个其值等于chars的串T
+
+    InsertString(A, B, 4); //在串S的第pos个字符之前插入串T。插入位置不正确或完全插入或者部分插入都返回提示
+    PrintString(A);        //输出字符串的所有字符
+
+    DeleteString(A, 2, 3);
+    PrintString(A); //输出字符串的所有字符
 }
