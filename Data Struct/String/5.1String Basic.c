@@ -315,6 +315,10 @@ void main()
     InsertString(A, B, 4); //在串S的第pos个字符之前插入串T。插入位置不正确或完全插入或者部分插入都返回提示
     PrintString(A);        //输出字符串的所有字符
 
-    DeleteString(A, 2, 3);
+    DeleteString(A, 2, 3); //从串S中删除第pos个字符起长度为len的子串
     PrintString(A); //输出字符串的所有字符
+    
+    
+    
+    
 }
