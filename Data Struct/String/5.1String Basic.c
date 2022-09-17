@@ -227,25 +227,52 @@ void InsertString(String S, String T, int pos)
         int i = pos;
         if (S[0] + T[0] <= MAX) //完全插入
         {
-            for (i = S[0]; i >= pos; i--)
+            for (i = S[0]; i >= pos; i--) //把S中pos后面的元素放到应有的位置
             {
                 S[T[0] + i] = S[i];
             }
-            for (i = 1; i <= T[0]; i++)
+            for (i = 1; i <= T[0]; i++) //插入T中的元素
             {
                 S[pos + i - 1] = T[i];
             }
             S[0] = S[0] + T[0];
             printf("字符串已完全插入！\n");
         }
-        else //部分插入------此程序存在问题
+        else
+        /*//部分插入------2022.9.15此程序存在问题
         {
             for (i = MAX; i <= pos; i--)
             {
-                S[i] = S[i - T[0]]; //仅此处与上面的不同！但思路相同！！
+                S[i] = S[i - T[0]];     //仅此处与上面的不同！但思路相同！！
             }
             for (i = pos; i < pos + T[0]; i++)
                 S[i] = T[i - pos + 1];
+            S[0] = MAX;
+            printf("字符串已部分插入！\n");
+        }*/
+        //部分插入------2022.9.17更新此程序
+        //思路：1.pos之前的元素不用再动，肯定能留的下
+        //     2.看看pos之后还有多少位置，如果T比这些剩下的位置还要长，说明pos后面的S元素都被挤出去了；
+        //       如果T比这些剩下的位置要短，说明pos后面先把T赋值进去之后再把的S的部分元素赋值进去。
+        {
+            if (T[0] >= MAX - pos + 1) //说明T比这些剩下的位置还要长(或者等于)，说明pos后面的剩余S元素都被挤出去了
+            {
+                for (i = pos; i <= MAX; i++)
+                {
+                    S[i] = T[i - pos + 1];
+                }
+            }
+            else //说明T比这些剩下的位置要短，说明pos后面先把T赋值进去之后还有空间能够再把的S的剩余一部分元素赋值进去。
+            {
+                for (i = MAX; i >= pos + T[0]; i--) //把S中pos+T长度后面的元素放到应有的位置
+                {
+                    S[i] = S[i - T[0]];
+                }
+                for (i = pos; i < T[0] + pos; i++) //将T中的元素插入进去！
+                {
+                    S[i] = T[i - pos + 1];
+                }
+            }
             S[0] = MAX;
             printf("字符串已部分插入！\n");
         }
@@ -303,9 +330,9 @@ void main()
     StringLength(T);  //返回串的元素个数
     PrintString(T);   //输出字符串的所有字符
 
-    GetString(R);    //从键盘获得字符串R
-    StringLength(R); //返回串的元素个数
-    PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
+     GetString(R);    //从键盘获得字符串R
+     StringLength(R); //返回串的元素个数
+     PrintString(R);  //输出字符串的所有字符（注意包含了换行符！）
     //可以用fputs(R, stdout);//与fgets()搭配使用，不会输出换行符，但是首字符（字符串长度）也输出了
 
     ProduceString(S1, "ascdsrtrtrt"); //生成一个其值等于chars的串
@@ -326,8 +353,8 @@ void main()
     printf("Index函数的返回值为：%d\n", Index(X, T1, 3));
     Index2(X, T1, 2); //若主串S中第pos个字符之后存在与T相等的子串，则返回第一个这样的子串在S中的位置，否则打印提示
 
-    ProduceString(A, "ascdsf"); //生成一个其值等于chars的串T
-    ProduceString(B, "ascef");  //生成一个其值等于chars的串T
+    ProduceString(A, "as12345678910cdsf"); //生成一个其值等于chars的串T
+    ProduceString(B, "ascefd11121114411"); //生成一个其值等于chars的串T
 
     InsertString(A, B, 4); //在串S的第pos个字符之前插入串T。插入位置不正确或完全插入或者部分插入都返回提示
     PrintString(A);        //输出字符串的所有字符
@@ -340,5 +367,5 @@ void main()
     ProduceString(T2, "tr");                              //生成一个其值等于chars的串
     ProduceString(V, "xx");                               //生成一个其值等于chars的串
     Replace(S2, T2, V);                                   //用V替换主串S中出现的所有与T相等的不重叠的子串
-    PrintString(S2);                                      //输出字符串的所有字符
+    PrintString(S2);       //输出字符串的所有字符
 }
