@@ -77,6 +77,31 @@ void Index(String S, String T, int pos)
     }
 }
 
+//通过计算返回子串T的next数组。
+void get_next(String T, int *next) 
+{
+	int i,k;
+  	i=1;
+  	k=0;
+  	next[1]=0;
+  	while (i<T[0])  /* 此处T[0]表示串T的长度 */
+ 	{
+    	if(k==0 || T[i]== T[k]) 
+		{
+      		++i;  
+			++k;  
+			next[i] = k;
+    	} 
+		else 
+			k= next[k];	/* 若字符不相同，则k值回溯 */
+  	}
+}
+
+
+
+
+
+
 /*************************主函数*********************************/
 void main()
 {
