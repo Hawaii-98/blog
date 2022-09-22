@@ -1,0 +1,12 @@
+c语言对数函数log的使用
+
+程序示例如下：
+#include<stdio.h>
+#include<math.h>
+int main(){ 
+	printf("%f\n",log(10)); //以e为底的对数函数 
+	printf("%f\n",log10(100)); //以10为底的对数函数 
+	printf("%f\n",log(8)/log(2)); //计算log2^8,运用换底公式 
+	printf("%f\n",exp(1)); //计算自然常数e
+	return 0;
+}
