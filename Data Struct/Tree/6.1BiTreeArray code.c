@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h >
 
 #define MAX 20
 //定义一个数组用以存储二叉树
@@ -82,15 +83,47 @@ void PrintTree(SqBiTree T)
 #define ClearTree InitSqBiTree
 
 //判断二叉树是否为空
-void BiTreeEmpty(SqBiTree T)
+int BiTreeEmpty(SqBiTree T)
 {
     if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+        return 0;
+    }
+    else
+    {
+        printf("二叉树非空！\n");
+        return 1;
+    }
+}
+
+//计算树的深度
+void BiTreeDepth(SqBiTree T)
+{
+    int i, lastone, Depth;
+    for (i = MAX - 1; i >= 0; i--) //注意i从max-1 开始遍历！！
+                                   //注意找树的最后一个结点一定是从后向前找空结点！
+    {
+        if (T[i] != Nil)
+        {
+            lastone = i + 1; //记录最后一个元素的位置(此处+1因为数组中的位置是从0开始的！)
+            break;
+        }
+    }
+    Depth = (int)log2(lastone) + 1; //树的深度计算公式
+    printf("树的深度为：%d\n", Depth);
+}
+
+//如果树不空，返回树的根
+void GetRoot(SqBiTree T)
+{
+    if (BiTreeEmpty == 0)
     {
         printf("二叉树为空！\n");
     }
     else
     {
-        printf("二叉树非空！\n");
+        printf("二叉树的根为：%c\n", T[0]);
     }
 }
 
@@ -103,6 +136,8 @@ int main()
     CreatBiTree(T); //按层序次序输入二叉树中结点的值(字符型或整型), 构造顺序存储的二叉树T
     PrintTree(T);   //逐个输出树的结点
 
-    ClearTree(T);   //清空树
-    BiTreeEmpty(T); //判断二叉树是否为空
+    // ClearTree(T);   //清空树
+    // BiTreeEmpty(T); //判断二叉树是否为空
+    BiTreeDepth(T); //计算树的深度
+    GetRoot(T);     //计算树的深度
 }
