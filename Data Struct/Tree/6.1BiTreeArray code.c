@@ -2,7 +2,7 @@
 #include <string.h>
 #include <math.h >
 
-#define MAX 20
+#define MAX 80
 //定义一个数组用以存储二叉树
 // int SqBiTree[MAX];注意不要这样定义，因为后续无法用
 // SqBiTree定义数组！！
@@ -117,7 +117,7 @@ void BiTreeDepth(SqBiTree T)
 //如果树不空，返回树的根
 void GetRoot(SqBiTree T)
 {
-    if (BiTreeEmpty == 0)
+    if (BiTreeEmpty(T) == 0)
     {
         printf("二叉树为空！\n");
     }
@@ -162,13 +162,137 @@ void LeftBro(SqBiTree T, char e)
     else
     {
         int i;
+        int flag = 0;
         for (i = 0; i < MAX; i++)
         {
             if (T[i] == e && i % 2 == 0) //找到e且其序号为偶数(是右孩子)
             {
                 printf("该元素的左兄弟为：%c\n", T[i - 1]);
-                break; //退出循环
+                flag = 1; //放置一个标志变量-----一个不错的思路！
             }
+        }
+        if (flag == 0) //如果标志没有被改变，说明没有找到！！
+        {
+            printf("该元素无左兄弟！\n");
+        }
+    }
+}
+
+// e是T中某个结点，返回e的右兄弟。若e是T的右孩子或无右兄弟,则打印提示
+void RightBro(SqBiTree T, char e)
+{
+    if (BiTreeEmpty == 0)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+        int i;
+        int flag = 0;
+        for (i = 0; i < MAX; i++)
+        {
+            if (T[i] == e && i % 2 != 0) //找到e且其序号为奇数(是左孩子)
+            {
+                printf("该元素的右兄弟为：%c\n", T[i + 1]);
+                flag = 1; //放置一个标志变量-----一个不错的思路！
+            }
+        }
+        if (flag == 0) //如果标志没有被改变，说明没有找到！！
+        {
+            printf("该元素无右兄弟！\n");
+        }
+    }
+}
+
+//前序遍历二叉树
+void PreOrderTraverse(SqBiTree T, int i)
+{
+    if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+        printf("%c\n", T[i]);
+        if (T[2 * i + 1] != Nil)
+        {
+            PreOrderTraverse(T, 2 * i + 1);
+        }
+        if (T[2 * i + 2] != Nil)
+        {
+            PreOrderTraverse(T, 2 * i + 2);
+        }
+    }
+}
+
+//中序遍历二叉树
+void InOrderTraverse(SqBiTree T, int i)
+{
+    if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+
+        if (T[2 * i + 1] != Nil)
+        {
+            InOrderTraverse(T, 2 * i + 1);
+        }
+        printf("%c\n", T[i]);
+        if (T[2 * i + 2] != Nil)
+        {
+            InOrderTraverse(T, 2 * i + 2);
+        }
+    }
+}
+
+//后序遍历二叉树
+void PostOrderTraverse(SqBiTree T, int i)
+{
+    if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+
+        if (T[2 * i + 1] != Nil)
+        {
+            PostOrderTraverse(T, 2 * i + 1);
+        }
+
+        if (T[2 * i + 2] != Nil)
+        {
+            PostOrderTraverse(T, 2 * i + 2);
+        }
+        printf("%c\n", T[i]);
+    }
+}
+
+//层序遍历二叉树
+void LevelOrderTraverse(SqBiTree T)
+{
+    if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+        int i;
+        int j = 0; //用于存储最后一个结点的位置
+        for (i = MAX - 1; i >= 0; i--)
+        {
+            if (T[i] != Nil)
+            {
+                j = i;
+                break;
+            }
+        }
+        for (i = 0; i <= j; i++)
+        {
+            if (T[i] != Nil)
+                printf("%c\n", T[i]);
         }
     }
 }
@@ -188,10 +312,25 @@ int main()
     GetRoot(T);     //计算树的深度
 
     char value = 'a';
-    Position e = {2, 1}; //注意此处输入时不要输入该层没有的较大序号，实际上可以在函数体内做一个判别，之前有做过，这里不再写了，有思路即可
+    Position e = {2, 1}; //给结构体赋初值，！！注意此处输入时不要输入该层没有的较大序号，实际上可以在函数体内做一个判别，之前有做过，这里不再写了，有思路即可
     GetValue(T, e);      //返回处于位置e(层,本层序号)的结点的的值
     Assign(T, e, value); //给处于位置e(层,本层序号)的结点赋新值value
     PrintTree(T);        //逐个输出树的结点
     char q = 't';
     LeftBro(T, q); // e是T中某个结点，返回e的左兄弟。若e是T的左孩子或无左兄弟,则打印提示
+    char p = 'u';
+    RightBro(T, p); // e是T中某个结点，返回e的右兄弟。若e是T的右孩子或无右兄弟,则打印提示
+
+    PreOrderTraverse(T, 0); //前序遍历二叉树---注意在遍历的过程中i值可能会取到很大的值，此处需要把max设置的大一些！！
+    printf("------------\n");
+    InOrderTraverse(T, 0); //中序遍历二叉树
+    printf("------------\n");
+    PostOrderTraverse(T, 0); //后序遍历二叉树
+    printf("------------\n");
+    LevelOrderTraverse(T); //层序遍历二叉树
+     
+    
+
+
+
 }
