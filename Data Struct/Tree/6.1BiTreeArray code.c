@@ -98,7 +98,7 @@ int BiTreeEmpty(SqBiTree T)
 }
 
 //计算树的深度
-void BiTreeDepth(SqBiTree T)
+int BiTreeDepth(SqBiTree T)
 {
     int i, lastone, Depth;
     for (i = MAX - 1; i >= 0; i--) //注意i从max-1 开始遍历！！
@@ -112,6 +112,7 @@ void BiTreeDepth(SqBiTree T)
     }
     Depth = (int)log2(lastone) + 1; //树的深度计算公式
     printf("树的深度为：%d\n", Depth);
+    return Depth;
 }
 
 //如果树不空，返回树的根
@@ -297,6 +298,30 @@ void LevelOrderTraverse(SqBiTree T)
     }
 }
 
+//逐层、按本层序号输出二叉树
+void PrintBitree(SqBiTree T)
+{
+    if (T[0] == Nil)
+    {
+        printf("二叉树为空！\n");
+    }
+    else
+    {
+        int i;
+        int k = BiTreeDepth(T); //获得树的深度
+        for (i = 1; i <= k; i++)
+        {
+            printf("第%d层\n", i);
+            int j;
+
+            for (j = (int)pow(2, i - 1) - 1; j <= (int)pow(2, i) - 2; j++) //第i层的元素的起始和终止位置
+            {
+                printf("%d:%c\n", j, T[j]); //如果是空的也输出
+            }
+        }
+    }
+}
+
 /***************主函数***************************/
 int main()
 {
@@ -328,9 +353,5 @@ int main()
     PostOrderTraverse(T, 0); //后序遍历二叉树
     printf("------------\n");
     LevelOrderTraverse(T); //层序遍历二叉树
-     
-    
-
-
-
+    PrintBitree(T);        //逐层、按本层序号输出二叉树
 }
