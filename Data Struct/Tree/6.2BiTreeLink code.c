@@ -85,4 +85,4 @@ void main()
     InitBiTree(&T);      //构造空二叉树T
     CreatBitree(&T);     //按前序输入二叉树中结点的值（一个字符）
     PreOrderTraverse(T); //前序遍历二叉树
-}
+} 
