@@ -103,6 +103,54 @@ void InThreading(BiThrTree p)
     }
 }
 
+//建立带头结点的线索二叉树（中序遍历二叉树T,并将其中序线索化,Thr指向头结点 ）
+void InOrderThreading(BiThrTree T, BiThrTree *Thr)
+{
+    *Thr = (BiThrTree)malloc(sizeof(BiThrNode));
+    if (!*Thr)
+    {
+        exit(0);
+    }
+    //对头结点进行初始化
+    (*Thr)->LTag = Link;
+    (*Thr)->RTag = Thread;
+    (*Thr)->RChild = (*Thr);
+    if (!T)
+    {
+        (*Thr)->LChild = (*Thr);
+    }
+    else
+    {
+        (*Thr)->LChild = T;
+        pre = (*Thr);
+        InThreading(T);
+        pre->RChild = (*Thr);
+        pre->RTag = Thread;
+        (*Thr)->RChild = pre;
+    }
+}
+
+//中序遍历二叉线索树T(头结点)的非递归算法
+void InOrderTraverse(BiThrTree T)
+{
+    BiThrTree p;
+    p = T->LChild;
+    while (p != T)
+    {
+        while (p->LTag == Link)
+        {
+            p = p->LChild;
+        }
+        printf("%c\n", p->data);
+        while (p->RTag == Thread && p->RChild != T)
+        {
+            p = p->RChild;
+            printf("%c\n", p->data);
+        }
+        p = p->RChild;
+    }
+}
+
 /*****************主函数**********************/
 void main()
 {
@@ -112,6 +160,10 @@ void main()
     CreatBiThrtree(&T);  //按前序输入二叉树中结点的值（一个字符）
     PreOrderTraverse(T); //前序遍历二叉树
     printf("\n");
-    pre = T;        //对pre进行初始化！
-    InThreading(T); //中序遍历进行中序线索化
+    pre = T; //对pre进行初始化！
+    //InThreading(T); //中序遍历进行中序线索化--!注意中序线索化与下面带头结点的中序线索化不要同时编译！！
+
+    BiThrTree Thr;
+    InOrderThreading(T, &Thr); //建立带头结点的线索二叉树（中序遍历二叉树T,并将其中序线索化,Thr指向头结点 ）
+    InOrderTraverse(Thr);      //中序遍历二叉线索树T(头结点)的非递归算法
 }
