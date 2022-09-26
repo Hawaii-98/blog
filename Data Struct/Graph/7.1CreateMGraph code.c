@@ -16,7 +16,7 @@ void CreateMGraph(MGraph *G)
 {
     int i, j, k, w;
     printf("请输入图的顶点数和边数：\n");
-    scanf("%d,%d", &G->vexsnum, &G->arcnum);
+    scanf("%d%d", &G->vexsnum, &G->arcnum);
     for (i = 0; i < G->vexsnum; i++)
     {
         printf("请输入顶点数据：\n");
@@ -32,7 +32,9 @@ void CreateMGraph(MGraph *G)
     for (k = 0; k < G->arcnum; k++)
     {
         printf("输入边(vi,vj)上的下标i，下标j和权w:\n");
-        scanf("%d,%d,%d", &i, &j, &w);
+        // scanf("%d,%d,%d", &i, &j, &w); //非常不建议在%d中间加逗号！
+        //详见https://github.com/Hawaii-98/blog/blob/main/Some%20points%20about%20C/%E4%BD%BF%E7%94%A8scanf%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9
+        scanf("%d%d%d", &i, &j, &w);
         G->arc[i][j] = w;
         G->arc[i][i] = w; //对称矩阵
     }
