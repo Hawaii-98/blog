@@ -153,6 +153,41 @@ void DFS(MGraph G, int i)
     }
 }
 
+//邻接矩阵的广度遍历算法
+void BFS(MGraph G)
+{
+    int i, j;
+    //初始化
+    for (i = 0; i < G.numVertexes; i++)
+    {
+        visited[i] = 0;
+    }
+    Queue Q;
+    InitQueue(&Q);
+    for (i = 0; i < G.numVertexes; i++)
+    {
+        if (!visited[i])
+        {
+            visited[i] = 1;
+            printf("%c\n", G.vexs[i]);
+            EnQueue(&Q, i);
+            while (QueueEmpty(Q) == 0) //队列不空
+            {
+                DeQueue(&Q, &i);
+                for (j = 0; j < G.numVertexes; j++)
+                {
+                    if (visited[j] == 0 && G.arc[i][j] == 1) //其它顶点若与当前顶点存在边（邻接点）且未访问过
+                    {
+                        visited[j] = 1;
+                        printf("%c\n", G.vexs[j]);
+                        EnQueue(&Q, j);
+                    }
+                }
+            }
+        }
+    }
+}
+
 /*********************主函数*******************************/
 void main()
 {
@@ -160,4 +195,6 @@ void main()
     CreateMGraph(&G);
     printf("图的深度遍历：\n");
     DFSTraverse(G);
+    printf("图的广度遍历：\n");
+    BFS(G);
 }
