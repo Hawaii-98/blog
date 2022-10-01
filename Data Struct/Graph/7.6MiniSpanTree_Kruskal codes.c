@@ -126,11 +126,44 @@ void sort(Edge edges[], MGraph G)
     }
 }
 
+//生成最小树的kruskal算法
+void Kruskal(Edge edges[], MGraph G)
+{
+    int i, n, m;
+    int parent[MAXVEX];
+    for (i = 0; i < G.numVertexes; i++)
+    {
+        parent[i] = 0;
+    }
+    printf("打印最小生成树：\n");
+    for (i = 0; i < G.numEdges; i++)
+    {
+        n = find(parent, edges[i].begin);
+        m = find(parent, edges[i].end);
+        if (n != m)
+        {
+            parent[n] = m;
+            printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
+        }
+    }
+}
+
+// find函数
+int find(int *parent, int f)
+{
+    while (parent[f] > 0)
+    {
+        f = parent[f];
+    }
+    return f;
+}
+
 /******************主函数*******************************/
 void main()
 {
     MGraph G;
     CreateMGraph(&G);
     CreateEdge(G);
-    sort(edges, G);
+    sort(edges, G);    //对网按权值排序
+    Kruskal(edges, G); //生成最小树的kruskal算法
 }
