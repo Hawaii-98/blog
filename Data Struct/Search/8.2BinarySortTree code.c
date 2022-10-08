@@ -30,7 +30,7 @@ Status SearchBST(BiTree T, int key, BiTree f, BiTree *p)
     else if (key == T->data)
     {
         *p = T;
-       // printf("查找到的位置对应的数据为%d。\n", (*p)->data);
+        // printf("查找到的位置对应的数据为%d。\n", (*p)->data);
         return TRUE;
     }
     else if (key > T->data)
@@ -72,6 +72,65 @@ Status InsertBST(BiTree *T, int key)
     }
 }
 
+//从二叉排序树中删除结点p，并重接它的左或右子树
+Status Delete(BiTree *p)
+{
+    BiTree q, s;
+    if ((*p)->lchild == (*p)->rchild == NULL)
+    {
+        (*p) = NULL;
+        free(p);
+    }
+    else if ((*p)->lchild == NULL)
+    {
+        q = (*p);
+        *p = (*p)->rchild;
+        free(q);
+    }
+    else if ((*p)->rchild == NULL)
+    {
+        q = (*p);
+        *p = (*p)->lchild;
+        free(q);
+    }
+    else
+    {
+        q = *p;
+        s = (*p)->lchild;
+        while (s->rchild)
+        {
+            q = s;
+            s = s->rchild;
+        }
+        (*p)->data = s->data;
+        if (q != (*p))
+        {
+            q->rchild = s->lchild;
+        }
+        else
+        {
+            q->lchild = s->lchild;
+        }
+        free(s);
+    }
+}
+
+//若二叉排序树T中存在关键字等于key的数据元素时，则删除该数据元素结点并返回TRUE；否则返回FALSE。
+Status DeleteBST(BiTree *T, int key)
+{
+    if (!*T) /* 不存在关键字等于key的数据元素 */
+        return FALSE;
+    else
+    {
+        if (key == (*T)->data) /* 找到关键字等于key的数据元素 */
+            return Delete(T);
+        else if (key < (*T)->data)
+            return DeleteBST(&(*T)->lchild, key);
+        else
+            return DeleteBST(&(*T)->rchild, key);
+    }
+}
+
 /********************主函数**************************/
 void main()
 {
@@ -85,4 +144,6 @@ void main()
     BiTree *p;
     SearchBST(T, 62, NULL, p);
     printf("查找到的位置对应的数据为%d。\n", (*p)->data);
+    DeleteBST(&T, 73);
+    printf("是否找到73？是-1，否-0：%d\n", SearchBST(T, 73, NULL, p));
 }
