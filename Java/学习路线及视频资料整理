@@ -1,0 +1,53 @@
+暂定学习内容如下，后续将跟根据实际情况进行调整！！
+
+1、Java零基础
+	作为一个新入门的小白，这部分的内容肯定是要学扎实的。如果Java基础的技术都学的不扎实，那就没办法继续学后面的内容。
+        主要的内容包含：Java基础语法、Java的平台应用以及Java的核心概念：jvm、jdk、jre以及Java面向对象思想。这部分内容是让你学会如何在系统中搭建Java开发环境，如何利用第三方工具
+进行Java程序的开发。
+2、数据库
+        数据库知识是程序员必须掌握的，包括建库、建表、增删改查、存储过程编写等等，熟悉并掌握sql语言的使用对程序员来说是非常重要的。
+        还有JDBC，jdbc是Java操作数据库的API，通过JDBC能让Java建立与数据库的沟通，掌握JDBC是Java程序员的必修内容。另外要掌握Java操作数据库的结构划分，掌握DAO框架的使用。
+3、Javaweb开发
+        Web分成两部分来学，前端和后端。
+		前端主要掌握这三个核心：HTML、CSS、JavaScript基础
+		后端重点掌握：HTTP协议，JSP的各种语法，Servlet生命周期以及ajax的实现原理。
+4、框架
+        三大框架是必不可少的，这是任何公司做一个项目的基础技术。目前最主流的就是SSM三大框架，如果框架学不会，那就白搭了。而且还要多练习，因为公司请你来是让你直接上手就能做的，
+不是让你来了以后现学的。
+        有的人学到这里会发现自己只会copy别人的代码，copy了好几遍还是自己写不出来代码。要不就没法运行，其实主要还是在于不理解底层原理。所以这部分内容需要好好的认认真真的学习。
+5、项目经验
+        我刚刚也说了，有了项目经验，去了公司才能直接上手。如果成功入职前期也不会太焦虑窘迫。所以在学习过程中该做的项目一个都不能少。
+        综合以上几点，可以看看现在一些企业的要求，大部分的公司对初级程序员的岗位进行提炼总结：能干活，基础牢、熟练框架。掌握以上要点，再加上自身的学习能力以及人格的自律性，后期再多
+ 背背面试题，找工作那就不在话下了，想要做到高级，是还需要学些分布式的。
+
+视频资源：
+一、JAVA基础
+     1.Java基础语法：  https://www.bilibili.com/video/av48144058/
+     2.Java项目（IDEA）：https://www.bilibili.com/video/BV18J411W7cE/?spm_id_from=333.999.0.0&vd_source=ba3e21f4f28240c980d51964293f1389
+二、数据结构与算法
+     Java实现：https://www.bilibili.com/video/BV1E4411H73v/?spm_id_from=333.999.0.0&vd_source=ba3e21f4f28240c980d51964293f1389
+三、数据库学习
+     1.MySQL：https://www.bilibili.com/video/av49181542/?vd_source=ba3e21f4f28240c980d51964293f1389
+     2.JDBC：https://www.bilibili.com/video/BV1Bt41137iB/?spm_id_from=333.337.search-card.all.click&vd_source=ba3e21f4f28240c980d51964293f1389
+四、Javaweb
+     https://www.bilibili.com/video/BV1Y7411K7zz/?spm_id_from=333.337.search-card.all.click&vd_source=ba3e21f4f28240c980d51964293f1389
+五、核心框架
+     1.spring：https://www.bilibili.com/video/BV1Vf4y127N5/?spm_id_from=333.999.0.0&vd_source=ba3e21f4f28240c980d51964293f1389
+     2.SpringMVC：https://www.bilibili.com/video/BV1Ry4y1574R/?spm_id_from=333.337.search-card.all.click&vd_source=ba3e21f4f28240c980d51964293f1389
+     3.Mybatis：https://www.bilibili.com/video/BV1NE411Q7Nx/?spm_id_from=333.337.search-card.all.click&vd_source=ba3e21f4f28240c980d51964293f1389
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
