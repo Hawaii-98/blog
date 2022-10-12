@@ -73,6 +73,7 @@ void LeftBalance(BiTree *T)
         Lr->bf = EH;
         L_Rotate(&(*T)->lchild); //对T的左子树做左旋平衡处理
         R_Rotate(T);             //对T做右旋处理
+        //注意此处两个函数引用语句的传递参数的不同形式，但是其本质都是传递一个指针变量（地址）
     }
 }
 
@@ -104,7 +105,7 @@ void RightBalance(BiTree *T)
             break;
         }
         Rl->bf = EH;
-        R_Rotate(&(*T)->rchild);
+        R_Rotate(&(*T)->rchild); //注意此处两个函数引用语句的传递参数的不同形式，但是其本质都是传递一个指针变量（地址）
         L_Rotate(T);
     }
 }
@@ -130,7 +131,7 @@ Status InsertAVL(BiTree *T, int e, Status *taller)
         }
         else if (e < (*T)->data)
         {                                             //应继续在T的左子树中进行搜索
-            if (!InsertAVL(&(*T)->lchild, e, taller)) /*  未插入 */
+            if (!InsertAVL(&(*T)->lchild, e, taller)) //未插入 //注意此处传递的第三个形参不用加取地址符号，因为taller在函数定义中就是一个指针变量
             {
                 return FALSE;
             }
@@ -190,3 +191,5 @@ int main()
         InsertAVL(&T, a[i], &taller);
     }
 }
+
+
